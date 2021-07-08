@@ -14,11 +14,11 @@ class CategoriesJSON extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
-        // return [
-        //     'status' => 'success',
-        //     'message' => 'categories data',
-        //     'data' => parent::toArray($request),
-        // ];
+        // return parent::toArray($request);
+        return [
+            'status' => 'success',
+            'message' => 'categories data',
+            'data' => parent::toArray($request),
+        ];
     }
 }

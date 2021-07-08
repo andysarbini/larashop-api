@@ -67,11 +67,13 @@ Route::prefix('v1')->group(function() {
     Route::middleware(['cors'])->get('categories', 'CategoryController@index');
     Route::get('categories/{id}', 'CategoryController@view')->where('id', '[0-9]+');
     Route::middleware(['cors'])->get('categories/random/{count}', 'CategoryController@random');
+    Route::middleware(['cors'])->get('categories/slug/{slug}', 'CategoryController@slug');
 
-    Route::get('books', 'BookController@index');  
+    Route::middleware(['cors'])->get('books', 'BookController@index');  
     Route::get('book/{id}', 'BookController@view')->where('id', '[0-9]+');
     Route::middleware(['cors'])->get('books/top/{count}', 'BookController@top');
     Route::get('books_all', 'BookController@all');
+    Route::middleware(['cors'])->get('books/slug/{slug}', 'BookController@slug');
     
 
     // Route::get('categories', function() {

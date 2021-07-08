@@ -16,5 +16,12 @@ class Category extends Model
         'name', 'slug', 'image', 'status'
     ];
 
+    public function books() {
+        return $this->belongsToMany("App\Book");
+
+        // atau jika tabel tidak dalam bentuk singular yg sm dengan modelnya
+        // return $this->belongsToMany('App\Book', 'book_category', 'category_id', 'book_id');
+    }
+
 }
 

@@ -6,7 +6,7 @@ use App\Book;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\Book as BookResource;
-use App\Http\Resources\Books as BookCollectionResource;
+use App\Http\Resources\Books as BookResourceCollection;
 
 class BookController extends Controller
 {
@@ -15,8 +15,10 @@ class BookController extends Controller
         // $books = new BookCollectionResource(Book::paginate()); // Book disini merujuk pada nama model
         // return $books;
         // return 'tesssst';
-        $cat = \App\Book::all();
-        return $cat;
+        // $cat = \App\Book::all();
+        // return $cat;
+        $criteria = Book::paginate(6);
+        return new BookResourceCollection($criteria);
     }
 
     public function cetak($judul)
@@ -36,12 +38,21 @@ class BookController extends Controller
         ->orderBy('views', 'DESC')
         ->limit($count)
         ->get();
-        return new BookCollectionResource($criteria);
+        return new BookResourceCollection($criteria);
     }
 
     public function All()
     {
-        $book = new BookCollectionResource(Book::get());
+        $book = new BookResourceCollection(Book::get());
         return $book;
+    }
+
+    public function slug($slug)
+    {
+        $criteria = Book::where('slug', $slug)->first();
+        $criteria->views = $criteria->views + 1;
+        $criteria->save();
+        return new BookResource($criteria);
+        
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 
-use App\Http\Resources\CategoriesJSON as CategoryResource;
+use App\Http\Resources\Category as CategoryResource;
 use App\Http\Resources\Categories as CategoryResourceCollection;
 
 class CategoryController extends Controller
@@ -102,7 +102,14 @@ class CategoryController extends Controller
 
     public function view($id)
     {
-        $cat = new CategoryResource(Category::find($id));
+        $cat = new CategoryResourceCollection(Category::find($id));
         return $cat;
+    }
+
+    public function slug($slug)
+    {
+        $criteria = Category::where('slug', $slug)->first();
+        return new CategoryResource($criteria);
+        
     }
 }

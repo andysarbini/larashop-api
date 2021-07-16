@@ -74,6 +74,7 @@ Route::prefix('v1')->group(function() {
     Route::middleware(['cors'])->get('books/top/{count}', 'BookController@top');
     Route::get('books_all', 'BookController@all');
     Route::middleware(['cors'])->get('books/slug/{slug}', 'BookController@slug');
+    Route::middleware(['cors'])->get('books/search/{keyword}', 'BookController@search');
     
 
     // Route::get('categories', function() {

@@ -61,8 +61,9 @@ Route::prefix('v1')->group(function() {
     //     // Match dengan "/v1/books"
     //     return 'buku abjad';
     // })->where('id', '[A-Za-z]+');
-    Route::post('login', 'AuthController@login');
+    Route::middleware(['cors'])->options('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
+    // Route::post('logout', 'AuthController@logout');
 
     Route::middleware(['cors'])->get('categories', 'CategoryController@index');
     Route::get('categories/{id}', 'CategoryController@view')->where('id', '[0-9]+');

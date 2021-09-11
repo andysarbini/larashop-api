@@ -64,4 +64,55 @@ class BookController extends Controller
             ->get();
         return new BookResourceCollection($criteria);
     }
+
+    public function register(Request $request)
+    {
+            $validator = Validator::make($request->all(), [
+                'title' => 'required|string|max:255'
+            ]);
+
+            $status = "error";
+            $message = "";
+            $data = null;
+            $code = 400;
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                $message = $errors;
+            }
+            else {
+                // $user = User::where('name', '=', $request->name)->first();
+                $user = Book::create([ 
+                    'name' => 'asep'
+                ]);
+                if($user) {
+                    $user->generateToken();
+                    $status = "success";
+                    $message = "register successfully";
+                    $data = $user->toArray();
+                    $code = 200;
+                }
+                else {
+                    $message = 'register failed';
+                }
+            }
+            // $input = $request::all();
+            // $user = User::create($input);
+
+            //     if($user) {
+            //         $user->generateToken();
+            //         $status = "success";
+            //         $message = "register successfully";
+            //         $data = $user->toArray();
+            //         $code = 200;
+            //     }
+            //     else {
+            //         $message = 'register failed';
+            //     }
+
+            return response()->json([
+                'status' => $status,
+                'message' => $message,
+                'data' => $data
+            ], $code);
+    }
 }
